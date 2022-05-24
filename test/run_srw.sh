@@ -63,3 +63,6 @@ bash run_fcst.sh
 #
 sed -i 's/\#\!\/bin\/sh/\#\!\/bin\/bash/g' run_post.sh
 bash run_post.sh
+
+# covert grib output to regular grid
+#wgrib2 rrfs.t00z.prslev.f000.rrfs_conus_25km.grib2 -set_grib_type same -new_grid_winds earth -new_grid_interpolation bilinear -if ':(CSNOW|CRAIN|CFRZR|CICEP|ICSEV):' -new_grid_interpolation neighbor -fi -set_bitmap 1 -set_grib_max_bits 16 -if ':(APCP|ACPCP|PRATE|CPRAT):' -set_grib_max_bits 25 -fi -if ':(APCP|ACPCP|PRATE|CPRAT|DZDT):' -new_grid_interpolation budget -fi -new_grid latlon 0:1440:0.25 90:721:-0.25 pgb2file_000_0p25
