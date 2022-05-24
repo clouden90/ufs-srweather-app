@@ -58,10 +58,12 @@ add_test ( NAME test_fv3_regional_upp
 set_tests_properties(test_fv3_regional_upp PROPERTIES TIMEOUT 7200)
 
 #
-add_test ( NAME test_fv3_regional_stoch
-           COMMAND bash run_regional_stoch.sh 
-           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test )
-set_tests_properties(test_fv3_regional_stoch PROPERTIES TIMEOUT 7200)
+if ( TEST_STOCH )
+  add_test ( NAME test_fv3_regional_stoch
+             COMMAND bash run_regional_stoch.sh 
+             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test )
+  set_tests_properties(test_fv3_regional_stoch PROPERTIES TIMEOUT 7200)
+endif()
 
 #
 add_test ( NAME test_regional_workflow

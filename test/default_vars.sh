@@ -1,3 +1,7 @@
+# data download option
+export GET_STOCH_INPUT=OFF
+
+# parameters for SRW apps
 # grid name: RRFS_CONUS_25km, RRFS_CONUS_13km, RRFS_CONUS_3km
 export GRID_NAME=RRFS_CONUS_25km
 # QUILTING_OPTION: TRUE/FALSE

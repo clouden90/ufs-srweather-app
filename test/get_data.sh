@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#
+source default_vars.sh
+
 #get data for ccpp-scm
 sh ../../src/ccpp-scm/contrib/get_all_static_data.sh
 
@@ -20,13 +23,26 @@ else
    aws s3 cp --no-sign-request s3://noaa-ufs-regtests-pds/input-data-20220414/FV3_regional_input_data input-data/FV3_regional_input_data --recursive
 fi
 
-# additional data for regional_stoch
-if [ -d "./input-data/FV3_input_data_regional_stoch" ]; then
-   echo "FV3_input_data_regional_stoch existed" 
+if [ -d "./input-data/FV3_fix" ]; then
+   echo "FV3_fix existed" 
 else
-   echo "no input-data/FV3_input_data_regional_stoch, create now"
-   mkdir -p input-data/FV3_input_data_regional_stoch
-   aws s3 cp --no-sign-request s3://noaa-ufs-regtests-pds/input-data-20220414/FV3_input_data_regional_stoch input-data/FV3_input_data_regional_stoch --recursive
+   echo "no input-data/FV3_fix, create now"
+   mkdir -p input-data/FV3_fix
+   aws s3 cp --no-sign-request s3://noaa-ufs-regtests-pds/input-data-20220414/FV3_fix input-data/FV3_fix --recursive
+fi
+
+echo $GET_STOCH_INPUT
+if [ $GET_STOCH_INPUT == "ON" ]; then
+   # additional data for regional_stoch
+   if [ -d "./input-data/FV3_input_data_regional_stoch" ]; then
+      echo "FV3_input_data_regional_stoch existed" 
+   else
+      echo "no input-data/FV3_input_data_regional_stoch, create now"
+      mkdir -p input-data/FV3_input_data_regional_stoch
+      aws s3 cp --no-sign-request s3://noaa-ufs-regtests-pds/input-data-20220414/FV3_input_data_regional_stoch input-data/FV3_input_data_regional_stoch --recursive
+   fi
+else
+   echo "We do not download stoch input data"
 fi
 
 #IC BC data for srw workflow (2019061500)
