@@ -9,7 +9,8 @@ ExternalProject_Add(UFS_UTILS
   )
 
 if(NOT CCPP_SUITES)
-  set(CCPP_SUITES "FV3_GFS_2017_gfdlmp,FV3_GFS_2017_gfdlmp_regional,FV3_GFS_v15p2,FV3_GFS_v16,FV3_RRFS_v1beta,FV3_HRRR,FV3_RRFS_v1alpha,FV3_GFS_v15_thompson_mynn_lam3km")
+  set(CCPP_SUITES "FV3_GFS_v17_p8,FV3_GFS_2017_gfdlmp,FV3_GFS_2017_gfdlmp_regional,FV3_GFS_v15p2,FV3_GFS_v16,FV3_RRFS_v1beta,FV3_HRRR,FV3_RRFS_v1alpha,FV3_GFS_v15_thompson_mynn,FV3_GFS_v15_thompson_mynn_lam3km")
+  #set(CCPP_SUITES "FV3_GFS_2017_gfdlmp,FV3_GFS_2017_gfdlmp_regional,FV3_GFS_v15p2,FV3_GFS_v16,FV3_RRFS_v1beta,FV3_HRRR,FV3_RRFS_v1alpha,FV3_GFS_v15_thompson_mynn_lam3km")
 endif()
 
 if(NOT APP)
@@ -69,3 +70,14 @@ ExternalProject_Add(UPP
   CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}"
   BUILD_ALWAYS TRUE
   )
+
+option(BUILD_CCPP-SCM "build ccpp-scm (only needed if want to run a complete set of ctest)")
+if ( BUILD_CCPP-SCM )
+  ExternalProject_Add(ccpp-scm
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/ccpp-scm
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ccpp-scm/scm/src
+    INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
+    CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}"
+    INSTALL_COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/ccpp-scm/src/ccpp-scm-build/scm ${CMAKE_INSTALL_PREFIX}/bin/
+    )
+endif ()

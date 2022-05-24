@@ -1,0 +1,9 @@
+#!/bin/sh
+#SBATCH -p compute
+#SBATCH -N 5
+#SBATCH -n 100 
+#SBATCH -t 120
+
+#
+ctest
+#ctest -VV -R test_regional_workflow 
