@@ -73,7 +73,7 @@ add_test ( NAME test_regional_workflow
 set_tests_properties(test_regional_workflow PROPERTIES TIMEOUT 7200)
 
 #
-if ( TEST_Barry )
+if ( TEST_BARRY )
   add_test ( NAME test_barry
              COMMAND bash run_barry.sh ${abs_top_srcdir} ${CMAKE_CURRENT_BINARY_DIR}
              WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test )
