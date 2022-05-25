@@ -51,6 +51,7 @@ fi
 
 #
 sed -i "17s/write_tasks_per_group:   8/write_tasks_per_group:   ${CTEST_WRITE_TASKS}/" ../../src/ufs-weather-model/tests/parm/model_configure_regional.IN
+sed -i "28s/RESTART_INTERVAL=\"12 -1\"/RESTART_INTERVAL=0/" ../../src/ufs-weather-model/tests/tests/regional_control
 sed -i "38s/TASKS=68/TASKS=${CTEST_TASKS}/" ../../src/ufs-weather-model/tests/tests/regional_control
 sed -i "39s/INPES=10/INPES=${CTEST_LAYOUTX}/" ../../src/ufs-weather-model/tests/tests/regional_control
 sed -i "40s/JNPES=6/JNPES=${CTEST_LAYOUTY}/" ../../src/ufs-weather-model/tests/tests/regional_control

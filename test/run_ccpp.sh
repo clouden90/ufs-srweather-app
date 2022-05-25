@@ -19,7 +19,7 @@ cp $SCM_ROOT/scm/src/suite_info.py ./
 cp $SCM_ROOT/scm/src/supported_cases.py ./
 module load nco || true
 #
-cp ../../test/data/fv3_model_point_noah.nc $SCM_ROOT/scm/data/processed_case_input/fv3_model_point_noah.nc
+cp ./data/fv3_model_point_noah.nc $SCM_ROOT/scm/data/processed_case_input/fv3_model_point_noah.nc
 #
 sed -i 's/scm\/run/..\/..\/\/build\/test\/run/g' run_scm.py
 sed -i 's/scm\/bin/..\/..\/bin/g' run_scm.py

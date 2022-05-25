@@ -1,7 +1,7 @@
 #!/bin/sh
 #SBATCH -p compute
 #SBATCH -N 2
-#SBATCH -n 80 
+#SBATCH -n 40 
 #SBATCH -t 120
 
 #

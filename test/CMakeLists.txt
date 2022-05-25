@@ -25,6 +25,12 @@ set( machine_envs
 )
 
 #
+set( test_data
+  ${CMAKE_CURRENT_SOURCE_DIR}/data/fv3_model_point_noah.nc
+  ${CMAKE_CURRENT_SOURCE_DIR}/data/stoch.nml
+)
+
+#
 foreach(FILENAME ${test_scripts})
     execute_process( COMMAND ${CMAKE_COMMAND} -E create_symlink
            ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}
@@ -38,6 +44,15 @@ foreach(FILENAME ${machine_envs})
      execute_process( COMMAND ${CMAKE_COMMAND} -E create_symlink
          ${FILENAME}
          ${CMAKE_CURRENT_BINARY_DIR}/machines/${filename} )
+endforeach()
+
+#
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/data)
+foreach(FILENAME ${test_data})
+     get_filename_component(filename ${FILENAME} NAME )
+     execute_process( COMMAND ${CMAKE_COMMAND} -E create_symlink
+         ${FILENAME}
+         ${CMAKE_CURRENT_BINARY_DIR}/data/${filename} )
 endforeach()
 
 #
@@ -59,12 +74,10 @@ add_test ( NAME test_fv3_regional_upp
 set_tests_properties(test_fv3_regional_upp PROPERTIES TIMEOUT 7200)
 
 #
-if ( TEST_STOCH )
-  add_test ( NAME test_fv3_regional_stoch
-             COMMAND bash run_regional_stoch.sh 
-             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test )
-  set_tests_properties(test_fv3_regional_stoch PROPERTIES TIMEOUT 7200)
-endif()
+add_test ( NAME test_fv3_regional_stoch
+           COMMAND bash run_regional_stoch.sh 
+           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test )
+set_tests_properties(test_fv3_regional_stoch PROPERTIES TIMEOUT 7200)
 
 #
 add_test ( NAME test_regional_workflow

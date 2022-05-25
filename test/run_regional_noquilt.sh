@@ -43,6 +43,7 @@ fi
 
 #
 sed -i "19s/TASKS=60/TASKS=${CTEST_TASKS_NOQUILT}/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
+sed -i "27s/RESTART_INTERVAL=\"12 -1\"/RESTART_INTERVAL=0/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
 sed -i "36s/INPES=10/INPES=${CTEST_LAYOUTX}/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
 sed -i "37s/JNPES=6/JNPES=${CTEST_LAYOUTY}/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
 #
