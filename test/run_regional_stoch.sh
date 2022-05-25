@@ -23,6 +23,24 @@ cat << EOF > rt.conf
 RUN     | regional_spp_sppt_shum_skeb                                                                                             |                                         | fv3 |
 EOF
 
+# arc org regional_spp_sppt_shum_skeb
+if [ -f "../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb.arc" ]; then
+   echo "regional_spp_sppt_shum_skeb.arc existed!"
+   cp ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb.arc ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb
+else
+   echo "no regional_spp_sppt_shum_skeb.arc! Make archive now!"
+   cp ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb.arc
+fi
+
+# arc org model_configure_regional_stoch.IN
+if [ -f "../../src/ufs-weather-model/tests/parm/model_configure_regional_stoch.IN.arc" ]; then
+   echo "model_configure_regional.IN.arc existed!"
+   cp ../../src/ufs-weather-model/tests/parm/model_configure_regional_stoch.IN.arc ../../src/ufs-weather-model/tests/parm/model_configure_regional_stoch.IN
+else
+   echo "no model_configure_regional_stoch.IN.arc! Make archive now!"
+   cp ../../src/ufs-weather-model/tests/parm/model_configure_regional_stoch.IN ../../src/ufs-weather-model/tests/parm/model_configure_regional_stoch.IN.arc
+fi
+
 #
 sed -i "17s/write_tasks_per_group:   12/write_tasks_per_group:   8/" ../../src/ufs-weather-model/tests/parm/model_configure_regional_stoch.IN
 sed -i "52s/domains_stack_size = 3000000/domains_stack_size = 9000000/" ../../src/ufs-weather-model/tests/parm/regional_stoch.nml.IN
@@ -30,11 +48,6 @@ sed -i "39s/INPES=15/INPES=12/" ../../src/ufs-weather-model/tests/tests/regional
 sed -i "40s/JNPES=12/JNPES=6/" ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb
 sed -i "44s/TASKS=192/TASKS=80/" ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb
 sed -i "42s/THRD=2/THRD=1/" ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb
-#OUT=$(tail -n 1 ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb)
-#if [[ $OUT != "export FHMAX=1" ]]; then
-#  echo "reduce runtime to 1hr!"
-#  sed -i '$ a export FHMAX=1' ../../src/ufs-weather-model/tests/tests/regional_spp_sppt_shum_skeb
-#fi
 
 #
 bash rt.sh

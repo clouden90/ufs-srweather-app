@@ -1,4 +1,6 @@
 #!/bin/bash
+# load user-defined configs
+source default_vars.sh
 
 #check input data
 # data for regional test
@@ -40,13 +42,14 @@ else
 fi
 
 #
-sed -i "19s/TASKS=60/TASKS=10/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
-sed -i "36s/INPES=10/INPES=5/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
-sed -i "37s/JNPES=6/JNPES=2/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
+sed -i "19s/TASKS=60/TASKS=${CTEST_TASKS_NOQUILT}/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
+sed -i "36s/INPES=10/INPES=${CTEST_LAYOUTX}/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
+sed -i "37s/JNPES=6/JNPES=${CTEST_LAYOUTY}/" ../../src/ufs-weather-model/tests/tests/regional_noquilt
+#
 OUT=$(tail -n 1 ../../src/ufs-weather-model/tests/tests/regional_noquilt)
-if [[ $OUT != "export FHMAX=1" ]]; then
+if [[ $OUT != "export FHMAX=$(eval echo "${CTEST_FHMAX}")" ]]; then
   echo "reduce runtime to 1hr!"
-  sed -i '$ a export FHMAX=1' ../../src/ufs-weather-model/tests/tests/regional_noquilt
+  sed -i "$ a export FHMAX=$(eval echo "${CTEST_FHMAX}")" ../../src/ufs-weather-model/tests/tests/regional_noquilt
 fi
 #
 bash rt.sh

@@ -1,4 +1,6 @@
 #!/bin/bash
+# load user-defined configs
+source default_vars.sh
 
 # data for regional test
 if [ -d "./input-data/FV3_fix" ]; then
@@ -43,19 +45,19 @@ if [ -f "../../src/ufs-weather-model/tests/parm/model_configure_regional.IN.arc"
    echo "model_configure_regional.IN.arc existed!"
    cp ../../src/ufs-weather-model/tests/parm/model_configure_regional.IN.arc ../../src/ufs-weather-model/tests/parm/model_configure_regional.IN
 else
-   echo "no regional_control.arc! Make archive now!"
+   echo "no model_configure_regional.IN.arc! Make archive now!"
    cp ../../src/ufs-weather-model/tests/parm/model_configure_regional.IN ../../src/ufs-weather-model/tests/parm/model_configure_regional.IN.arc
 fi
 
 #
-sed -i "17s/write_tasks_per_group:   8/write_tasks_per_group:   2/" ../../src/ufs-weather-model/tests/parm/model_configure_regional.IN
-sed -i "38s/TASKS=68/TASKS=12/" ../../src/ufs-weather-model/tests/tests/regional_control
-sed -i "39s/INPES=10/INPES=5/" ../../src/ufs-weather-model/tests/tests/regional_control
-sed -i "40s/JNPES=6/JNPES=2/" ../../src/ufs-weather-model/tests/tests/regional_control
+sed -i "17s/write_tasks_per_group:   8/write_tasks_per_group:   ${CTEST_WRITE_TASKS}/" ../../src/ufs-weather-model/tests/parm/model_configure_regional.IN
+sed -i "38s/TASKS=68/TASKS=${CTEST_TASKS}/" ../../src/ufs-weather-model/tests/tests/regional_control
+sed -i "39s/INPES=10/INPES=${CTEST_LAYOUTX}/" ../../src/ufs-weather-model/tests/tests/regional_control
+sed -i "40s/JNPES=6/JNPES=${CTEST_LAYOUTY}/" ../../src/ufs-weather-model/tests/tests/regional_control
 OUT=$(tail -n 1 ../../src/ufs-weather-model/tests/tests/regional_control)
-if [[ $OUT != "export FHMAX=1" ]]; then
+if [[ $OUT != "export FHMAX=$(eval echo "${CTEST_FHMAX}")" ]]; then
   echo "reduce runtime to 1hr!"
-  sed -i '$ a export FHMAX=1' ../../src/ufs-weather-model/tests/tests/regional_control
+  sed -i "$ a export FHMAX=$(eval echo "${CTEST_FHMAX}")" ../../src/ufs-weather-model/tests/tests/regional_control
 fi
 
 #

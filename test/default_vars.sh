@@ -1,3 +1,11 @@
+#parameters for RT-related ctests
+export CTEST_WRITE_TASKS=2
+export CTEST_LAYOUTX=5
+export CTEST_LAYOUTY=2
+export CTEST_TASKS_NOQUILT=$(($CTEST_LAYOUTX*$CTEST_LAYOUTY))
+export CTEST_TASKS=$(($CTEST_LAYOUTX*$CTEST_LAYOUTY+$CTEST_WRITE_TASKS))
+export CTEST_FHMAX=1
+
 # parameters for SRW apps
 #
 export EXP_NAME=test_srw

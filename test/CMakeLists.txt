@@ -48,7 +48,7 @@ if ( BUILD_CCPP-SCM )
 endif()
 
 #
-add_test ( NAME test_fv3_regional
+add_test ( NAME test_fv3_regional_noquilt
            COMMAND bash run_regional_noquilt.sh 
            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test )
 
