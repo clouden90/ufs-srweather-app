@@ -28,6 +28,9 @@ set( machine_envs
 set( test_data
   ${CMAKE_CURRENT_SOURCE_DIR}/data/fv3_model_point_noah.nc
   ${CMAKE_CURRENT_SOURCE_DIR}/data/stoch.nml
+  ${CMAKE_CURRENT_SOURCE_DIR}/tcvit_rsmc_storms.txt
+  ${CMAKE_CURRENT_SOURCE_DIR}/fort.15
+  ${CMAKE_CURRENT_SOURCE_DIR}/input.nml
 )
 
 #
