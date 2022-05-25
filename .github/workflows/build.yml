@@ -10,7 +10,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: |
-             cd ufs-srweather-app
+             #cd ufs-srweather-app
              # ./manage_externals/checkout_externals -o
              # module use modulefiles
              # module load build_cheyenne_intel
