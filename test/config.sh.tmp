@@ -1,7 +1,7 @@
 MACHINE="linux"
 ACCOUNT="compute"
 EXPT_BASEDIR="${CTEST_DIR}"
-EXPT_SUBDIR="test_srw"
+EXPT_SUBDIR="@[EXP_NAME]"
 
 COMPILER="intel"
 VERBOSE="TRUE"
@@ -17,7 +17,7 @@ NUM_ENS_MEMBERS="2"
 
 CCPP_PHYS_SUITE="@[CCPP_SUITE]"
 FCST_LEN_HRS="@[FCST_HRS]"
-LBC_SPEC_INTVL_HRS="3"
+LBC_SPEC_INTVL_HRS="@[LBC_INTVL_HR]"
 
 DATE_FIRST_CYCL="@[FIRST_CYCLE]"
 DATE_LAST_CYCL="@[LAST_CYCLE]"
@@ -63,9 +63,9 @@ USE_USER_STAGED_EXTRN_FILES="TRUE"
 # if on another platform, using other dates, other external models, etc.
 # Uncomment the following EXTRN_MDL_*_ICS/LBCS only when USE_USER_STAGED_EXTRN_FILES=TRUE
 #
-EXTRN_MDL_SOURCE_BASEDIR_ICS="${CTEST_DIR}/input-data/model_data/FV3GFS"
+EXTRN_MDL_SOURCE_BASEDIR_ICS="@[MDL_BASEDIR]"
 #EXTRN_MDL_FILES_ICS=( "gfs.pgrb2.0p25.f000" )
-EXTRN_MDL_SOURCE_BASEDIR_LBCS="${CTEST_DIR}/input-data/model_data/FV3GFS"
+EXTRN_MDL_SOURCE_BASEDIR_LBCS="@[MDL_BASEDIR]"
 #EXTRN_MDL_FILES_LBCS=( "gfs.pgrb2.0p25.f003" )
 #EXTRN_MDL_FILES_LBCS=( "gfs.pgrb2.0p25.f006" "gfs.pgrb2.0p25.f012" "gfs.pgrb2.0p25.f018" "gfs.pgrb2.0p25.f024" \
 #                       "gfs.pgrb2.0p25.f030" "gfs.pgrb2.0p25.f036" "gfs.pgrb2.0p25.f042" "gfs.pgrb2.0p25.f048" )

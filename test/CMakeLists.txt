@@ -1,6 +1,5 @@
 #
 set( test_scripts
-  get_data.sh
   atparse.bash
   default_vars.sh 
   run_ccpp.sh
@@ -14,6 +13,8 @@ set( test_scripts
   linux.sh.tmp
   job_card
   job_card_orion
+  run_barry.sh
+  barry_vars.sh
 )
 
 #
@@ -70,3 +71,11 @@ add_test ( NAME test_regional_workflow
            COMMAND bash run_srw.sh ${abs_top_srcdir} ${CMAKE_CURRENT_BINARY_DIR}
            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test )
 set_tests_properties(test_regional_workflow PROPERTIES TIMEOUT 7200)
+
+#
+if ( TEST_Barry )
+  add_test ( NAME test_barry
+             COMMAND bash run_barry.sh ${abs_top_srcdir} ${CMAKE_CURRENT_BINARY_DIR}
+             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test )
+  set_tests_properties(test_barry PROPERTIES TIMEOUT 7200)
+endif()

@@ -4,6 +4,14 @@ echo "top src folder is located at: $1"
 export SCM_ROOT=$1/src/ccpp-scm
 echo $SCM_ROOT
 #
+#get data for ccpp-scm
+if [ -d "../../src/ccpp-scm/scm/data/physics_input_data" ]; then
+   echo "data for ccpp-scm existed!"
+else
+   echo "no data for ccpp-scm, download now!"
+   sh ../../src/ccpp-scm/contrib/get_all_static_data.sh
+fi
+#
 #ln -fs $SCM_ROOT/scm/src/run_scm.py ./
 #ln -fs $SCM_ROOT/scm/src/suite_info.py ./
 cp $SCM_ROOT/scm/src/run_scm.py ./
@@ -12,7 +20,6 @@ cp $SCM_ROOT/scm/src/supported_cases.py ./
 module load nco || true
 #
 cp ../../test/data/fv3_model_point_noah.nc $SCM_ROOT/scm/data/processed_case_input/fv3_model_point_noah.nc
-#ncrename -h -O -v zorlw,zorl $SCM_ROOT/scm/data/processed_case_input/fv3_model_point_noah.nc || true
 #
 sed -i 's/scm\/run/..\/..\/\/build\/test\/run/g' run_scm.py
 sed -i 's/scm\/bin/..\/..\/bin/g' run_scm.py
