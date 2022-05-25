@@ -1,15 +1,15 @@
 #!/bin/sh
 #SBATCH --account=epic-ps
 #SBATCH --qos=batch
-#SBATCH --partition=orion
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=40
+#SBATCH --partition=service
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=12
 #SBATCH --time=120
 #SBATCH --job-name="ctest_gnu"
 #SBATCH --exclusive
 
 #
-source ../../test/machines/orion_gnu.env 
+source ./machines/orion_gnu.env 
 
 #
 ctest

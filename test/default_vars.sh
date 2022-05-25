@@ -20,13 +20,13 @@ export CYCLE_HR=00
 
 export MODEL_NAME=FV3_GFS_v16_CONUS_25km
 
-export LAYOUTX=12
-export LAYOUTY=6
+export LAYOUTX=5
+export LAYOUTY=2
 
 # ICS FORMAT: grib2, nemsio, netcdf
 export ICS_FMT=grib2
 export LBCS_FMT=grib2
-export DATA_DIR=/home/Yi-cheng.Teng/ufs-srweather-app/build/test/input-data
+export DATA_DIR=${PWD}/input-data
 export MDL_BASEDIR=${DATA_DIR}/model_data/FV3GFS
 
 # number of cores used by UTILS
