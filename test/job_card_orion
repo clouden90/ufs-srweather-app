@@ -12,5 +12,4 @@
 source ./machines/orion_intel.env 
 
 #
-#ctest
-ctest -VV -R test_barry
+ctest
