@@ -85,6 +85,12 @@ mv config.sh $WORK_DIR
 mv linux.sh $WORK_DIR/machine/
 
 #
+if [ -f "/contrib/GST/miniconda3/modulefiles/miniconda3/4.10.3" ]; then
+   echo "on AWS cloud! load miniconda3!"
+   export PATH=/contrib/GST/miniconda/envs/regional_workflow/bin:$PATH
+fi
+
+#
 cd $WORK_DIR
 echo $PWD
 bash generate_FV3LAM_wflow.sh

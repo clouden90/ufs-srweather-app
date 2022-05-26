@@ -109,6 +109,12 @@ mv config.sh $WORK_DIR
 mv linux.sh $WORK_DIR/machine/
 
 #
+if [ -f "/contrib/GST/miniconda3/modulefiles/miniconda3/4.10.3" ]; then
+   echo "on AWS cloud! load miniconda3!"
+   export PATH=/contrib/GST/miniconda/envs/regional_workflow/bin:$PATH
+fi
+
+#
 cd $WORK_DIR
 echo $PWD
 bash generate_FV3LAM_wflow.sh
@@ -150,7 +156,7 @@ bash run_post.sh
 #export LIB_JASPER_PATH=/contrib/hpc-modules/intel-18.0.5.274/jasper/2.0.25/lib64
 # build gfdl tracker
 cd $EXPTDIR
-wget https://dtcenter.org/sites/default/files/community-code/gfdl/standalone_gfdl-vortextracker_v3.9a.tar.gz
+wget --no-check-certificate https://dtcenter.org/sites/default/files/community-code/gfdl/standalone_gfdl-vortextracker_v3.9a.tar.gz
 tar -zxvf standalone_gfdl-vortextracker_v3.9a.tar.gz
 rm -rf standalone_gfdl-vortextracker_v3.9a.tar.gz
 cd standalone_gfdl-vortextracker_v3.9a
@@ -181,5 +187,5 @@ cp ${CTEST_DIR}/data/bal022019_post.dat ./
 ./trk_exec/gettrk.exe < input.nml
 
 #
-pip3 install basemap --user
+#pip3 install basemap --user
 python3 trk_plot.py

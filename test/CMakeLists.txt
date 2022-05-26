@@ -20,6 +20,7 @@ set( test_scripts
 #
 set( machine_envs
   ${CMAKE_CURRENT_SOURCE_DIR}/machines/noaacloud_intel.env
+  ${CMAKE_CURRENT_SOURCE_DIR}/machines/noaacloud_aws_intel.env
   ${CMAKE_CURRENT_SOURCE_DIR}/machines/orion_intel.env
   ${CMAKE_CURRENT_SOURCE_DIR}/machines/orion_gnu.env
 )
