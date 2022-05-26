@@ -42,115 +42,80 @@ Check the ``${SR_WX_APP_TOP_DIR}/test/build_test$PID.out`` file for PASS/FAIL.
 
 Currently, the following configurations are supported/tested:
 
-Machine     | Orion       | NOAA Cloud (GCPv2)   |
+Machine     | Orion       | NOAA Cloud (AWS & GCPv2)   |
 ------------| ------------|--------|
 Compiler(s) | Intel, GNU  | Intel  |
 
 ## How to use
 
-Currently there are totally 12 tests (after build step, you can type ``ctest -N`` to see the list) existed.
+Currently there are 5 tests (after build step, you can type ``ctest -N`` to see the list) existed.
 System requirements: at least 12-core cpus, 16gb memory, and 60gb disk space
 
 ```
-[Yi-cheng.Teng@aznoaa-6 test]$ ctest -N
-Test project /home/Yi-cheng.Teng/ufs-srweather-app/build/test
-  Test  #1: test_ccpp
-  Test  #2: test_fv3_regional_noquilt
-  Test  #3: test_fv3_regional_control
-  Test  #4: test_fv3_regional_stoch
-  Test  #5: test_fv3_global_control
-  Test  #6: test_regional_workflow_initial
-  Test  #7: test_regional_grid
-  Test  #8: test_regional_orog
-  Test  #9: test_regional_sfc_climo
-  Test #10: test_regional_ic_bc
-  Test #11: test_regional_fcst
-  Test #12: test_regional_post
+[Yi-cheng.Teng@awsnoaa-1 test]$ ctest -N
+Test project /lustre/ufs-srweather-app/build/test
+  Test #1: test_ccpp
+  Test #2: test_fv3_regional_noquilt
+  Test #3: test_fv3_regional_upp
+  Test #4: test_fv3_regional_stoch
+  Test #5: test_regional_workflow
 
-Total Tests: 12
+Total Tests: 5
 ```
 
-On NOAA Cloud (gcp for example):
+On NOAA Cloud (AWS for example):
 
 
 ```
 git clone -b ctest https://github.com/clouden90/ufs-srweather-app.git
 cd ufs-srweather-app
 ./manage_externals/checkout_externals -o
-source test/machines/noaacloud_intel.env
+source test/machines/noaacloud_aws_intel.env
 mkdir build
 cd build
 cmake -DBUILD_CCPP-SCM=ON .. -DCMAKE_INSTALL_PREFIX=..
 make -j4
 cd test
-sh get_data.sh
 sbatch job_card
+
 ```
 And You can check your slurm output. It should contain something like:
 
 ```
-Test project /home/Yi-cheng.Teng/ufs-srweather-app/build/test
-      Start  1: test_ccpp
- 1/12 Test  #1: test_ccpp ........................   Passed   29.57 sec
-      Start  2: test_fv3_regional_noquilt
- 2/12 Test  #2: test_fv3_regional_noquilt ........   Passed  156.11 sec
-      Start  3: test_fv3_regional_control
- 3/12 Test  #3: test_fv3_regional_control ........   Passed  130.41 sec
-      Start  4: test_fv3_regional_stoch
- 4/12 Test  #4: test_fv3_regional_stoch ..........   Passed  1099.44 sec
-      Start  5: test_fv3_global_control
- 5/12 Test  #5: test_fv3_global_control ..........   Passed  137.23 sec
-      Start  6: test_regional_workflow_initial
- 6/12 Test  #6: test_regional_workflow_initial ...   Passed  522.56 sec
-      Start  7: test_regional_grid
- 7/12 Test  #7: test_regional_grid ...............   Passed    4.95 sec
-      Start  8: test_regional_orog
- 8/12 Test  #8: test_regional_orog ...............   Passed  160.57 sec
-      Start  9: test_regional_sfc_climo
- 9/12 Test  #9: test_regional_sfc_climo ..........   Passed  131.49 sec
-      Start 10: test_regional_ic_bc
-10/12 Test #10: test_regional_ic_bc ..............   Passed   50.98 sec
-      Start 11: test_regional_fcst
-11/12 Test #11: test_regional_fcst ...............   Passed   86.89 sec
-      Start 12: test_regional_post
-12/12 Test #12: test_regional_post ...............   Passed   17.90 sec
+Test project /lustre/ufs-srweather-app/build/test
+    Start 1: test_ccpp
+1/5 Test #1: test_ccpp ........................   Passed    6.78 sec
+    Start 2: test_fv3_regional_noquilt
+2/5 Test #2: test_fv3_regional_noquilt ........   Passed   74.70 sec
+    Start 3: test_fv3_regional_upp
+3/5 Test #3: test_fv3_regional_upp ............   Passed   70.53 sec
+    Start 4: test_fv3_regional_stoch
+4/5 Test #4: test_fv3_regional_stoch ..........   Passed   72.39 sec
+    Start 5: test_regional_workflow
+5/5 Test #5: test_regional_workflow ...........   Passed  856.20 sec
 
-100% tests passed, 0 tests failed out of 12
+100% tests passed, 0 tests failed out of 5
 
-Total Test time (real) = 2528.61 sec
+Total Test time (real) = 1080.64 sec
 ```
 
 Or on Orion:
 
 ```
-Test project /work/noaa/epic-ps/ycteng/ufs/20220519/ufs-srweather-app/build/test
-      Start  1: test_ccpp
- 1/12 Test  #1: test_ccpp ........................   Passed   16.32 sec
-      Start  2: test_fv3_regional_noquilt
- 2/12 Test  #2: test_fv3_regional_noquilt ........   Passed   50.10 sec
-      Start  3: test_fv3_regional_control
- 3/12 Test  #3: test_fv3_regional_control ........   Passed   47.01 sec
-      Start  4: test_fv3_regional_stoch
- 4/12 Test  #4: test_fv3_regional_stoch ..........   Passed  1490.87 sec
-      Start  5: test_fv3_global_control
- 5/12 Test  #5: test_fv3_global_control ..........   Passed   58.04 sec
-      Start  6: test_regional_workflow_initial
- 6/12 Test  #6: test_regional_workflow_initial ...   Passed   37.96 sec
-      Start  7: test_regional_grid
- 7/12 Test  #7: test_regional_grid ...............   Passed    5.55 sec
-      Start  8: test_regional_orog
- 8/12 Test  #8: test_regional_orog ...............   Passed  101.49 sec
-      Start  9: test_regional_sfc_climo
- 9/12 Test  #9: test_regional_sfc_climo ..........   Passed  126.02 sec
-      Start 10: test_regional_ic_bc
-10/12 Test #10: test_regional_ic_bc ..............   Passed  136.53 sec
-      Start 11: test_regional_fcst
-11/12 Test #11: test_regional_fcst ...............   Passed  198.87 sec
-      Start 12: test_regional_post
-12/12 Test #12: test_regional_post ...............   Passed   18.96 sec
+Test project /work/noaa/epic-ps/ycteng/case/20220524/ufs-srweather-app/build/test
+    Start 1: test_ccpp
+1/5 Test #1: test_ccpp ........................   Passed    9.27 sec
+    Start 2: test_fv3_regional_noquilt
+2/5 Test #2: test_fv3_regional_noquilt ........   Passed   78.67 sec
+    Start 3: test_fv3_regional_upp
+3/5 Test #3: test_fv3_regional_upp ............   Passed   71.81 sec
+    Start 4: test_fv3_regional_stoch
+4/5 Test #4: test_fv3_regional_stoch ..........   Passed   73.90 sec
+    Start 5: test_regional_workflow
+5/5 Test #5: test_regional_workflow ...........   Passed  1266.89 sec
 
-100% tests passed, 0 tests failed out of 12
+100% tests passed, 0 tests failed out of 5
 
-Total Test time (real) = 2287.75 sec
-
+Total Test time (real) = 1500.55 sec
 ```
+Additionally, the user can modify test/default_vars.sh to run test#5 with differnt resolution/physical suite/number of cores/length of forecast.
