@@ -5,11 +5,12 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=12
 #SBATCH --time=120
-#SBATCH --job-name="ctest_gnu"
+#SBATCH --job-name="ctest_intel"
 #SBATCH --exclusive
 
 #
-source ./machines/orion_gnu.env 
+source ./machines/orion_intel.env 
 
 #
-ctest
+#ctest
+ctest -VV -R test_barry

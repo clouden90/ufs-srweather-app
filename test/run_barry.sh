@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # load user-defined configs
-source ./machines/noaacloud_intel.env
 source atparse.bash
 source barry_vars.sh 
 
