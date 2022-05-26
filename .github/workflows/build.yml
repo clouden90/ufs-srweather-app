@@ -2,7 +2,7 @@ name: Build SRW
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: [self-hosted, ncar]
+    runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -10,7 +10,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: |
-             cd ufs-srweather-app
+             #cd ufs-srweather-app
              # ./manage_externals/checkout_externals -o
              # module use modulefiles
              # module load build_cheyenne_intel
