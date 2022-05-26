@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # load user-defined configs
+source ./machines/noaacloud_intel.env
 source atparse.bash
 source barry_vars.sh 
+
 
 #
 echo "top src folder is located at: $1"
@@ -142,5 +144,42 @@ bash run_fcst.sh
 sed -i 's/\#\!\/bin\/sh/\#\!\/bin\/bash/g' run_post.sh
 bash run_post.sh
 
-# covert grib output to regular grid
-#wgrib2 rrfs.t00z.prslev.f000.rrfs_conus_25km.grib2 -set_grib_type same -new_grid_winds earth -new_grid_interpolation bilinear -if ':(CSNOW|CRAIN|CFRZR|CICEP|ICSEV):' -new_grid_interpolation neighbor -fi -set_bitmap 1 -set_grib_max_bits 16 -if ':(APCP|ACPCP|PRATE|CPRAT):' -set_grib_max_bits 25 -fi -if ':(APCP|ACPCP|PRATE|CPRAT|DZDT):' -new_grid_interpolation budget -fi -new_grid latlon 0:1440:0.25 90:721:-0.25 pgb2file_000_0p25
+#GFDL trk tool
+#export LIB_Z_PATH=/contrib/hpc-modules/intel-18.0.5.274/zlib/1.2.11/lib
+#export LIB_PNG_PATH=/contrib/hpc-modules/intel-18.0.5.274/png/1.6.35/lib64
+#export LIB_JASPER_PATH=/contrib/hpc-modules/intel-18.0.5.274/jasper/2.0.25/lib64
+# build gfdl tracker
+cd $EXPTDIR
+wget https://dtcenter.org/sites/default/files/community-code/gfdl/standalone_gfdl-vortextracker_v3.9a.tar.gz
+tar -zxvf standalone_gfdl-vortextracker_v3.9a.tar.gz
+rm -rf standalone_gfdl-vortextracker_v3.9a.tar.gz
+cd standalone_gfdl-vortextracker_v3.9a
+sed -i "142s/image.inmem_=1;/\/\/image.inmem_=1;/" ./libs/src/g2/enc_jpeg2000.c
+echo "2" | ./configure
+./compile 2>&1 | tee tracker.log
+
+#
+START=$((0))
+END=$((FCST_HRS))
+INTVL=$((LBC_INTVL_HR))
+for i in $(eval echo "{$START..$END..$INTVL}")
+do
+  it=$(printf "%03d" $i)
+  ttt=$(($i*60))
+  it2=$(printf "%05d" $ttt)
+  wgrib2 ../${FIRST_CYCLE}${CYCLE_HR}/postprd/rrfs.t00z.prslev.f${it}.${GRID_NAME,,}.grib2 -set_grib_type same -new_grid_winds earth -new_grid_interpolation bilinear -if ':(CSNOW|CRAIN|CFRZR|CICEP|ICSEV):' -new_grid_interpolation neighbor -fi -set_bitmap 1 -set_grib_max_bits 16 -if ':(APCP|ACPCP|PRATE|CPRAT):' -set_grib_max_bits 25 -fi -if ':(APCP|ACPCP|PRATE|CPRAT|DZDT):' -new_grid_interpolation budget -fi -new_grid latlon 0:1440:0.25 90:721:-0.25 gfs.SRW.AL022019.${FIRST_CYCLE}${CYCLE_HR}.f${it2}
+
+  ./trk_exec/grb2index.exe gfs.SRW.AL022019.${FIRST_CYCLE}${CYCLE_HR}.f${it2} gfs.SRW.AL022019.${FIRST_CYCLE}${CYCLE_HR}.f${it2}.ix
+done
+
+#
+cp ${CTEST_DIR}/data/input.nml ./
+cp ${CTEST_DIR}/data/fort.15 ./
+cp ${CTEST_DIR}/data/tcvit_rsmc_storms.txt ./
+cp ${CTEST_DIR}/data/trk_plot.py ./
+cp ${CTEST_DIR}/data/bal022019_post.dat ./
+./trk_exec/gettrk.exe < input.nml
+
+#
+pip3 install basemap --user
+python3 trk_plot.py
