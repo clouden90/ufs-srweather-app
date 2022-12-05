@@ -1,0 +1,55 @@
+metadata:
+  description: >-
+    Sample community config
+user:
+  RUN_ENVIR: community
+  MACHINE: SET_MY_MACHINE
+  ACCOUNT: SET_MY_ACCOUNT 
+platform:
+  MODEL: SET_MY_CCPP_SUBCONUS_3km
+  CCPA_OBS_DIR: "SET_MY_PATH/Indy-Severe-Weather/obs_data/ccpa/proc"
+  MRMS_OBS_DIR: "SET_MY_PATH/Indy-Severe-Weather/obs_data/mrms/proc"
+  NDAS_OBS_DIR: "SET_MY_PATH/Indy-Severe-Weather/obs_data/ndas/proc"
+workflow:
+  USE_CRON_TO_RELAUNCH: false
+  EXPT_BASEDIR: SET_MY_PATH/expt_dirs
+  EXPT_SUBDIR: test_community
+  CCPP_PHYS_SUITE: SET_MY_CCPP 
+  PREDEF_GRID_NAME: SUBCONUS_Ind_3km
+  DATE_FIRST_CYCL: '2019061500'
+  DATE_LAST_CYCL: '2019061500'
+  FCST_LEN_HRS: 6
+  PREEXISTING_DIR_METHOD: rename
+  VERBOSE: true
+  COMPILER: intel
+workflow_switches:
+  RUN_TASK_MAKE_GRID: true
+  RUN_TASK_MAKE_OROG: true
+  RUN_TASK_MAKE_SFC_CLIMO: true
+  RUN_TASK_GET_OBS_CCPA: false
+  RUN_TASK_GET_OBS_MRMS: false
+  RUN_TASK_GET_OBS_NDAS: false
+  RUN_TASK_VX_GRIDSTAT: true
+  RUN_TASK_VX_POINTSTAT: true
+  RUN_TASK_VX_ENSGRID: false
+  RUN_TASK_VX_ENSPOINT: false
+  RUN_TASK_PLOT_ALLVARS: true
+task_get_extrn_ics:
+  EXTRN_MDL_SOURCE_BASEDIR_ICS: SET_MY_PATH/Indy-Severe-Weather/input_model_data/FV3GFS/grib2/2019061500
+  USE_USER_STAGED_EXTRN_FILES: true
+  EXTRN_MDL_NAME_ICS: FV3GFS
+  FV3GFS_FILE_FMT_ICS: grib2
+task_get_extrn_lbcs:
+  EXTRN_MDL_SOURCE_BASEDIR_LBCS: SET_MY_PATH/Indy-Severe-Weather/input_model_data/FV3GFS/grib2/2019061500
+  USE_USER_STAGED_EXTRN_FILES: true
+  EXTRN_MDL_NAME_LBCS: FV3GFS
+  LBC_SPEC_INTVL_HRS: 6
+  FV3GFS_FILE_FMT_LBCS: grib2
+task_run_fcst:
+  WTIME_RUN_FCST: 02:00:00
+  QUILTING: true
+task_plot_allvars:
+  COMOUT_REF: ""
+global:
+  DO_ENSEMBLE: false
+  NUM_ENS_MEMBERS: 2

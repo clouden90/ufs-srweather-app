@@ -135,3 +135,10 @@ FILE(COPY "${CMAKE_CURRENT_BINARY_DIR}/ufs_srweather_app_meta.h" DESTINATION inc
 add_custom_target(build DEPENDS sorc/pbuild)
 
 add_subdirectory(sorc)
+
+#
+enable_testing()
+add_subdirectory(tests)
+
+# This always needs to come last.
+include(CTest)
