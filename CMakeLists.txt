@@ -48,7 +48,7 @@ ENDFUNCTION()
 # Turn on testing.
 enable_testing()
 include(CTest)
-add_subdirectory(sorc)
+add_subdirectory(tests)
 
 # Default bin directory
 if(NOT DEFINED CMAKE_INSTALL_BINDIR)
